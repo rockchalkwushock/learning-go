@@ -21,3 +21,12 @@ func TestBinarySearch(t *testing.T) {
 		t.Errorf("BinarySearch(%v, %v) = %v, want %v", array, target, got, want)
 	}
 }
+
+func TestTwoCrystalBalls(t *testing.T) {
+	array := []bool{false, false, false, false, false, false, false, false, false, false, false, false, false, false, true}
+	want := 14
+	got := TwoCrystalBalls(array)
+	if got != want {
+		t.Errorf("TwoCrystalBalls(%v) = %v, want %v", array, got, want)
+	}
+}

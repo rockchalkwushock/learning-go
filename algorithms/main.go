@@ -1,5 +1,9 @@
 package main
 
+import (
+	"math"
+)
+
 func main() {
 
 }
@@ -31,4 +35,31 @@ func BinarySearch(array []int, target int) bool {
 	}
 
 	return false
+}
+
+func TwoCrystalBalls(floors []bool) int {
+	buildingHeight := len(floors)
+	interval := int(math.Sqrt(float64(buildingHeight)))
+	currentFloor := 0
+	prevFloor := 0
+
+	// Drop the first ball at intervals until it breaks
+	for currentFloor < buildingHeight {
+		if floors[currentFloor] {
+			break
+		}
+		prevFloor = currentFloor
+		currentFloor += interval
+		if currentFloor > buildingHeight {
+			currentFloor = buildingHeight
+		}
+	}
+
+	// Use the second ball for linear search in the narrowed range.
+	for floor := prevFloor + 1; floor < currentFloor && floor < buildingHeight; floor++ {
+		if floors[floor] {
+			return floor
+		}
+	}
+	return -1
 }
