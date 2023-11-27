@@ -42,3 +42,29 @@ func TestBubbleSort(t *testing.T) {
 		t.Errorf("BubbleSort(%v) = %v, want %v", array, got, want)
 	}
 }
+
+func TestQueue(t *testing.T) {
+	q := Queue{}
+
+	if !q.IsEmpty() {
+		t.Errorf("Queue.IsEmpty() = %v, want %v", q.IsEmpty(), true)
+	}
+
+	q.Enqueue(1)
+
+	if q.IsEmpty() {
+		t.Errorf("Queue.IsEmpty() = %v, want %v", q.IsEmpty(), false)
+	}
+
+	if q.Peek() != 1 {
+		t.Errorf("Queue.Peek() = %v, want %v", q.Peek(), 1)
+	}
+
+	if q.Dequeue() != 1 {
+		t.Errorf("Queue.Dequeue() = %v, want %v", q.Dequeue(), 1)
+	}
+
+	if !q.IsEmpty() {
+		t.Errorf("Queue.IsEmpty() = %v, want %v", q.IsEmpty(), true)
+	}
+}
