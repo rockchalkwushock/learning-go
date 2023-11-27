@@ -68,3 +68,25 @@ func TestQueue(t *testing.T) {
 		t.Errorf("Queue.IsEmpty() = %v, want %v", q.IsEmpty(), true)
 	}
 }
+
+func TestStack(t *testing.T) {
+	s := Stack{}
+
+	if !s.IsEmpty() {
+		t.Errorf("Stack.IsEmpty() = %v, want %v", s.IsEmpty(), true)
+	}
+
+	s.Push(1)
+
+	if s.IsEmpty() {
+		t.Errorf("Stack.IsEmpty() = %v, want %v", s.IsEmpty(), false)
+	}
+
+	if s.Pop() != 1 {
+		t.Errorf("Stack.Pop() = %v, want %v", s.Pop(), 1)
+	}
+
+	if !s.IsEmpty() {
+		t.Errorf("Stack.IsEmpty() = %v, want %v", s.IsEmpty(), true)
+	}
+}

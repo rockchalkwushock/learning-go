@@ -101,3 +101,29 @@ func (q *Queue) IsEmpty() bool {
 func (q *Queue) Peek() int {
 	return q.items[0]
 }
+
+type Stack struct {
+	items []int
+}
+
+func (s *Stack) New() *Stack {
+	return &Stack{}
+}
+
+func (s *Stack) Pop() int {
+	item, items := s.items[len(s.items)-1], s.items[:len(s.items)-1]
+	s.items = items
+	return item
+}
+
+func (s *Stack) Push(item int) {
+	s.items = append(s.items, item)
+}
+
+func (s *Stack) IsEmpty() bool {
+	return len(s.items) == 0
+}
+
+func (s *Stack) Peek() int {
+	return s.items[len(s.items)-1]
+}
