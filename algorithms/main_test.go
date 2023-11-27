@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestLinearSearch(t *testing.T) {
 	array := []int{1, 2, 3, 4, 5}
@@ -28,5 +31,14 @@ func TestTwoCrystalBalls(t *testing.T) {
 	got := TwoCrystalBalls(array)
 	if got != want {
 		t.Errorf("TwoCrystalBalls(%v) = %v, want %v", array, got, want)
+	}
+}
+
+func TestBubbleSort(t *testing.T) {
+	array := []int{4, 2, 1, 3, 5}
+	want := []int{1, 2, 3, 4, 5}
+	got := BubbleSort(array)
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("BubbleSort(%v) = %v, want %v", array, got, want)
 	}
 }
