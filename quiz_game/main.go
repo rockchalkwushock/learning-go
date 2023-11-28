@@ -55,6 +55,8 @@ func parseLines(lines [][]string) []Problem {
 			question: line[0],
 		}
 	}
+
+	return ret
 }
 
 func exit(msg string) {
