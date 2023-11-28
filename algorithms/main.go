@@ -151,3 +151,27 @@ func (ab *ArrayBuffer) Set(index int, value byte) {
 func (ab *ArrayBuffer) Length() int {
 	return len(ab.data)
 }
+
+// ArrayList
+
+type ArrayList struct {
+	data []interface{}
+}
+
+func NewArrayList() *ArrayList {
+	return &ArrayList{
+		data: make([]interface{}, 0),
+	}
+}
+
+func (al *ArrayList) Add(value interface{}) {
+	al.data = append(al.data, value)
+}
+
+func (al *ArrayList) Get(index int) interface{} {
+	return al.data[index]
+}
+
+func (al *ArrayList) Size() int {
+	return len(al.data)
+}

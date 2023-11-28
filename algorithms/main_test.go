@@ -105,3 +105,22 @@ func TestArrayBuffer(t *testing.T) {
 		t.Errorf("Unexpected values in ArrayBuffer")
 	}
 }
+
+func TestArrayList(t *testing.T) {
+	al := NewArrayList()
+
+	if al.Size() != 0 {
+		t.Errorf("Expected size to be 0, got %d", al.Size())
+	}
+
+	al.Add("Hello")
+	al.Add("World")
+
+	if al.Size() != 2 {
+		t.Errorf("Expected size to be 2, got %d", al.Size())
+	}
+
+	if al.Get(0) != "Hello" || al.Get(1) != "World" {
+		t.Errorf("Unexpected values in ArrayList")
+	}
+}
