@@ -127,3 +127,27 @@ func (s *Stack) IsEmpty() bool {
 func (s *Stack) Peek() int {
 	return s.items[len(s.items)-1]
 }
+
+// ArrayBuffer
+
+type ArrayBuffer struct {
+	data []byte
+}
+
+func NewArrayBuffer(size int) *ArrayBuffer {
+	return &ArrayBuffer{
+		data: make([]byte, size),
+	}
+}
+
+func (ab *ArrayBuffer) Get(index int) byte {
+	return ab.data[index]
+}
+
+func (ab *ArrayBuffer) Set(index int, value byte) {
+	ab.data[index] = value
+}
+
+func (ab *ArrayBuffer) Length() int {
+	return len(ab.data)
+}

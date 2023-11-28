@@ -90,3 +90,18 @@ func TestStack(t *testing.T) {
 		t.Errorf("Stack.IsEmpty() = %v, want %v", s.IsEmpty(), true)
 	}
 }
+
+func TestArrayBuffer(t *testing.T) {
+	ab := NewArrayBuffer(10)
+
+	if ab.Length() != 10 {
+		t.Errorf("Expected length to be 10, got %d", ab.Length())
+	}
+
+	ab.Set(0, 'H')
+	ab.Set(1, 'i')
+
+	if ab.Get(0) != 'H' || ab.Get(1) != 'i' {
+		t.Errorf("Unexpected values in ArrayBuffer")
+	}
+}
