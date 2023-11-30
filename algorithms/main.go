@@ -224,4 +224,3 @@ func MazeSolver(maze [][]int, current, end Point) bool {
 
 	return false
 }
-

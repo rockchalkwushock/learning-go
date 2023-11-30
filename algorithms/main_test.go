@@ -128,28 +128,28 @@ func TestArrayList(t *testing.T) {
 // MazeSolver
 func TestMazeSolver(t *testing.T) {
 	testCases := []struct {
-			maze    [][]int
-			start   Point
-			end     Point
-			want    bool
+		maze  [][]int
+		start Point
+		end   Point
+		want  bool
 	}{
-			{
-					maze: [][]int{
-							{1, 1, 1, 1, 1},
-							{1, 0, 0, 0, 1},
-							{1, 1, 1, 0, 1},
-					},
-					start: Point{0, 0},
-					end:   Point{2, 4},
-					want:  true,
+		{
+			maze: [][]int{
+				{1, 1, 1, 1, 1},
+				{1, 0, 0, 0, 1},
+				{1, 1, 1, 0, 1},
 			},
-			// Add more test cases as needed.
+			start: Point{0, 0},
+			end:   Point{2, 4},
+			want:  true,
+		},
+		// Add more test cases as needed.
 	}
 
 	for _, tc := range testCases {
-			got := MazeSolver(tc.maze, tc.start, tc.end)
-			if got != tc.want {
-					t.Errorf("MazeSolver(%v, %v, %v) = %v, want %v", tc.maze, tc.start, tc.end, got, tc.want)
-			}
+		got := MazeSolver(tc.maze, tc.start, tc.end)
+		if got != tc.want {
+			t.Errorf("MazeSolver(%v, %v, %v) = %v, want %v", tc.maze, tc.start, tc.end, got, tc.want)
+		}
 	}
 }
