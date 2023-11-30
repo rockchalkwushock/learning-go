@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math"
 )
 
@@ -175,3 +176,52 @@ func (al *ArrayList) Get(index int) interface{} {
 func (al *ArrayList) Size() int {
 	return len(al.data)
 }
+
+// Maze Solver
+type Point struct {
+	X, Y int
+}
+
+var directions = []Point{
+	{0, 1},  // down
+	{1, 0},  // right
+	{0, -1}, // up
+	{-1, 0}, // left
+}
+
+func printMaze(maze [][]int) {
+	for _, row := range maze {
+		for _, col := range row {
+			fmt.Printf("%d ", col)
+		}
+		fmt.Println()
+	}
+	fmt.Println()
+}
+
+func MazeSolver(maze [][]int, current, end Point) bool {
+	if current.X < 0 || current.Y < 0 || current.X >= len(maze) || current.Y >= len(maze[0]) {
+		return false
+	}
+
+	if maze[current.X][current.Y] == 0 {
+		return false
+	}
+
+	if current == end {
+		return true
+	}
+
+	maze[current.X][current.Y] = 0
+	printMaze(maze)
+
+	for _, d := range directions {
+		next := Point{current.X + d.X, current.Y + d.Y}
+		if MazeSolver(maze, next, end) {
+			return true
+		}
+	}
+
+	return false
+}
+
