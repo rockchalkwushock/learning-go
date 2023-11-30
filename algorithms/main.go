@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -189,15 +188,15 @@ var directions = []Point{
 	{-1, 0}, // left
 }
 
-func printMaze(maze [][]int) {
-	for _, row := range maze {
-		for _, col := range row {
-			fmt.Printf("%d ", col)
-		}
-		fmt.Println()
-	}
-	fmt.Println()
-}
+// func printMaze(maze [][]int) {
+// 	for _, row := range maze {
+// 		for _, col := range row {
+// 			fmt.Printf("%d ", col)
+// 		}
+// 		fmt.Println()
+// 	}
+// 	fmt.Println()
+// }
 
 func MazeSolver(maze [][]int, current, end Point) bool {
 	if current.X < 0 || current.Y < 0 || current.X >= len(maze) || current.Y >= len(maze[0]) {
@@ -213,7 +212,7 @@ func MazeSolver(maze [][]int, current, end Point) bool {
 	}
 
 	maze[current.X][current.Y] = 0
-	printMaze(maze)
+	// printMaze(maze)
 
 	for _, d := range directions {
 		next := Point{current.X + d.X, current.Y + d.Y}
@@ -223,4 +222,27 @@ func MazeSolver(maze [][]int, current, end Point) bool {
 	}
 
 	return false
+}
+
+// QuickSort
+func QuickSort(array []int) []int {
+	if len(array) < 2 {
+		return array
+	}
+
+	pivot := array[0]
+	var less, greater []int
+
+	for _, v := range array[1:] {
+		if v <= pivot {
+			less = append(less, v)
+		} else {
+			greater = append(greater, v)
+		}
+	}
+
+	less = QuickSort(less)
+	greater = QuickSort(greater)
+
+	return append(append(less, pivot), greater...)
 }

@@ -153,3 +153,24 @@ func TestMazeSolver(t *testing.T) {
 		}
 	}
 }
+
+// QuickSort
+func TestQuickSort(t *testing.T) {
+	testCases := []struct {
+		array []int
+		want  []int
+	}{
+		{
+			array: []int{4, 2, 1, 3, 5},
+			want:  []int{1, 2, 3, 4, 5},
+		},
+		// Add more test cases as needed.
+	}
+
+	for _, tc := range testCases {
+		got := QuickSort(tc.array)
+		if !reflect.DeepEqual(got, tc.want) {
+			t.Errorf("QuickSort(%v) = %v, want %v", tc.array, got, tc.want)
+		}
+	}
+}
