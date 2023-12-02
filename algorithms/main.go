@@ -246,3 +246,108 @@ func QuickSort(array []int) []int {
 
 	return append(append(less, pivot), greater...)
 }
+
+// Doubly Linked List
+type Node struct {
+	Next     *Node
+	Previous *Node
+	Value    interface{}
+}
+
+type DoublyLinkedList struct {
+	Head *Node
+	Tail *Node
+}
+
+func NewDoublyLinkedList() *DoublyLinkedList {
+	return &DoublyLinkedList{}
+}
+
+func (ll *DoublyLinkedList) Append(value interface{}) {
+	node := &Node{Value: value}
+
+	if ll.Head == nil {
+		ll.Head = node
+	} else {
+		ll.Tail.Next = node
+		node.Previous = ll.Tail
+	}
+
+	ll.Tail = node
+}
+
+func (ll *DoublyLinkedList) IsEmpty() bool {
+	return ll.Head == nil
+}
+
+func (ll *DoublyLinkedList) Prepend(value interface{}) {
+	node := &Node{Value: value}
+
+	if ll.Head == nil {
+		ll.Head = node
+	} else {
+		ll.Head.Previous = node
+		node.Next = ll.Head
+	}
+
+	ll.Head = node
+}
+
+func (ll *DoublyLinkedList) Remove(value interface{}) {
+	current := ll.Head
+
+	for current != nil {
+		if current.Value == value {
+			if current == ll.Head {
+				ll.Head = current.Next
+				ll.Head.Previous = nil
+			} else if current == ll.Tail {
+				ll.Tail = current.Previous
+				ll.Tail.Next = nil
+			} else {
+				current.Previous.Next = current.Next
+				current.Next.Previous = current.Previous
+			}
+		}
+		current = current.Next
+	}
+}
+
+func (ll *DoublyLinkedList) RemoveTail() {
+	if ll.Tail != nil {
+		ll.Tail = ll.Tail.Previous
+		ll.Tail.Next = nil
+	}
+}
+
+func (ll *DoublyLinkedList) RemoveHead() {
+	if ll.Head != nil {
+		ll.Head = ll.Head.Next
+		ll.Head.Previous = nil
+	}
+}
+
+func (ll *DoublyLinkedList) Search(value interface{}) *Node {
+	current := ll.Head
+
+	for current != nil {
+		if current.Value == value {
+			return current
+		}
+		current = current.Next
+	}
+
+	return nil
+}
+
+func (ll *DoublyLinkedList) Size() int {
+	count := 0
+	current := ll.Head
+
+	for current != nil {
+		count++
+		current = current.Next
+	}
+
+	return count
+}

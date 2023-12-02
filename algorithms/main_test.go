@@ -174,3 +174,44 @@ func TestQuickSort(t *testing.T) {
 		}
 	}
 }
+
+// DoublyLinkedList
+func TestDoublyLinkedList(t *testing.T) {
+	dll := DoublyLinkedList{}
+
+	if !dll.IsEmpty() {
+		t.Errorf("DoublyLinkedList.IsEmpty() = %v, want %v", dll.IsEmpty(), true)
+	}
+
+	dll.Append(1)
+	dll.Append(2)
+	dll.Append(3)
+
+	if dll.IsEmpty() {
+		t.Errorf("DoublyLinkedList.IsEmpty() = %v, want %v", dll.IsEmpty(), false)
+	}
+
+	if dll.Size() != 3 {
+		t.Errorf("DoublyLinkedList.Size() = %v, want %v", dll.Size(), 3)
+	}
+
+	if dll.Head.Value != 1 {
+		t.Errorf("DoublyLinkedList.Head.Value = %v, want %v", dll.Head.Value, 1)
+	}
+
+	if dll.Tail.Value != 3 {
+		t.Errorf("DoublyLinkedList.Tail.Value = %v, want %v", dll.Tail.Value, 3)
+	}
+
+	dll.RemoveHead()
+
+	if dll.Head.Value != 2 {
+		t.Errorf("DoublyLinkedList.Head.Value = %v, want %v", dll.Head.Value, 2)
+	}
+
+	dll.RemoveTail()
+
+	if dll.Tail.Value != 2 {
+		t.Errorf("DoublyLinkedList.Tail.Value = %v, want %v", dll.Tail.Value, 2)
+	}
+}
