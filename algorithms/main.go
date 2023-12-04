@@ -351,3 +351,36 @@ func (ll *DoublyLinkedList) Size() int {
 
 	return count
 }
+
+// MergeSort
+func MergeSort(array []int) []int {
+	if len(array) < 2 {
+		return array
+	}
+
+	mid := len(array) / 2
+
+	return merge(MergeSort(array[:mid]), MergeSort(array[mid:]))
+}
+
+func merge(left, right []int) []int {
+	result := make([]int, len(left)+len(right))
+
+	for i, j, k := 0, 0, 0; k < len(result); k++ {
+		if i >= len(left) {
+			result[k] = right[j]
+			j++
+		} else if j >= len(right) {
+			result[k] = left[i]
+			i++
+		} else if left[i] < right[j] {
+			result[k] = left[i]
+			i++
+		} else {
+			result[k] = right[j]
+			j++
+		}
+	}
+
+	return result
+}

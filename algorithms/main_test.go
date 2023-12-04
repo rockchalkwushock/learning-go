@@ -215,3 +215,24 @@ func TestDoublyLinkedList(t *testing.T) {
 		t.Errorf("DoublyLinkedList.Tail.Value = %v, want %v", dll.Tail.Value, 2)
 	}
 }
+
+// MergeSort
+func TestMergeSort(t *testing.T) {
+	testCases := []struct {
+		array []int
+		want  []int
+	}{
+		{
+			array: []int{4, 2, 1, 3, 5},
+			want:  []int{1, 2, 3, 4, 5},
+		},
+		// Add more test cases as needed.
+	}
+
+	for _, tc := range testCases {
+		got := MergeSort(tc.array)
+		if !reflect.DeepEqual(got, tc.want) {
+			t.Errorf("MergeSort(%v) = %v, want %v", tc.array, got, tc.want)
+		}
+	}
+}
