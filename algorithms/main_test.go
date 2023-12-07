@@ -236,3 +236,32 @@ func TestMergeSort(t *testing.T) {
 		}
 	}
 }
+
+// MinHeap
+func TestMinHeap(t *testing.T) {
+	h := NewMinHeap()
+
+	if !h.IsEmpty() {
+		t.Errorf("Expected heap to be empty")
+	}
+
+	h.Add(3)
+	h.Add(2)
+	h.Add(1)
+
+	if h.Poll() != 1 {
+		t.Errorf("Expected 1, got %d", h.Poll())
+	}
+
+	if h.Poll() != 2 {
+		t.Errorf("Expected 2, got %d", h.Poll())
+	}
+
+	if h.Poll() != 3 {
+		t.Errorf("Expected 3, got %d", h.Poll())
+	}
+
+	if !h.IsEmpty() {
+		t.Errorf("Expected heap to be empty")
+	}
+}
