@@ -488,3 +488,106 @@ func (h *MinHeap) heapifyDown() {
 		index = smallerChildIndex
 	}
 }
+
+// MaxHeap
+type MaxHeap struct {
+	items []int
+}
+
+func NewMaxHeap() *MaxHeap {
+	return &MaxHeap{}
+}
+
+func (h *MaxHeap) IsEmpty() bool {
+	return len(h.items) == 0
+}
+
+func (h *MaxHeap) GetLeftChildIndex(parentIndex int) int {
+	return 2*parentIndex + 1
+}
+
+func (h *MaxHeap) GetRightChildIndex(parentIndex int) int {
+	return 2*parentIndex + 2
+}
+
+func (h *MaxHeap) GetParentIndex(childIndex int) int {
+	return (childIndex - 1) / 2
+}
+
+func (h *MaxHeap) HasLeftChild(index int) bool {
+	return h.GetLeftChildIndex(index) < len(h.items)
+}
+
+func (h *MaxHeap) HasRightChild(index int) bool {
+	return h.GetRightChildIndex(index) < len(h.items)
+}
+
+func (h *MaxHeap) HasParent(index int) bool {
+	return h.GetParentIndex(index) >= 0
+}
+
+func (h *MaxHeap) LeftChild(index int) int {
+	return h.items[h.GetLeftChildIndex(index)]
+}
+
+func (h *MaxHeap) RightChild(index int) int {
+	return h.items[h.GetRightChildIndex(index)]
+}
+
+func (h *MaxHeap) Parent(index int) int {
+	return h.items[h.GetParentIndex(index)]
+}
+
+func (h *MaxHeap) Swap(indexOne, indexTwo int) {
+	h.items[indexOne], h.items[indexTwo] = h.items[indexTwo], h.items[indexOne]
+}
+
+func (h *MaxHeap) Peek() int {
+	if len(h.items) == 0 {
+		return -1
+	}
+	return h.items[0]
+}
+
+func (h *MaxHeap) Poll() int {
+	if len(h.items) == 0 {
+		return -1
+	}
+
+	item := h.items[0]
+	h.items[0] = h.items[len(h.items)-1]
+	h.items = h.items[:len(h.items)-1]
+	h.heapifyDown()
+	return item
+}
+
+func (h *MaxHeap) Add(item int) {
+	h.items = append(h.items, item)
+	h.heapifyUp()
+}
+
+func (h *MaxHeap) heapifyUp() {
+	index := len(h.items) - 1
+	for h.HasParent(index) && h.Parent(index) < h.items[index] {
+		h.Swap(h.GetParentIndex(index), index)
+		index = h.GetParentIndex(index)
+	}
+}
+
+func (h *MaxHeap) heapifyDown() {
+	index := 0
+	for h.HasLeftChild(index) {
+		largerChildIndex := h.GetLeftChildIndex(index)
+		if h.HasRightChild(index) && h.RightChild(index) > h.LeftChild(index) {
+			largerChildIndex = h.GetRightChildIndex(index)
+		}
+
+		if h.items[index] > h.items[largerChildIndex] {
+			break
+		} else {
+			h.Swap(index, largerChildIndex)
+		}
+
+		index = largerChildIndex
+	}
+}

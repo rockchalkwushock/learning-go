@@ -265,3 +265,32 @@ func TestMinHeap(t *testing.T) {
 		t.Errorf("Expected heap to be empty")
 	}
 }
+
+// MaxHeap
+func TestMaxHeap(t *testing.T) {
+	h := NewMaxHeap()
+
+	if !h.IsEmpty() {
+		t.Errorf("Expected heap to be empty")
+	}
+
+	h.Add(1)
+	h.Add(2)
+	h.Add(3)
+
+	if h.Poll() != 3 {
+		t.Errorf("Expected 3, got %d", h.Poll())
+	}
+
+	if h.Poll() != 2 {
+		t.Errorf("Expected 2, got %d", h.Poll())
+	}
+
+	if h.Poll() != 1 {
+		t.Errorf("Expected 1, got %d", h.Poll())
+	}
+
+	if !h.IsEmpty() {
+		t.Errorf("Expected heap to be empty")
+	}
+}
