@@ -294,3 +294,25 @@ func TestMaxHeap(t *testing.T) {
 		t.Errorf("Expected heap to be empty")
 	}
 }
+
+func TestDijkstra(t *testing.T) {
+	g := NewGraph()
+
+	node1 := g.AddNode("1")
+	node2 := g.AddNode("2")
+	node3 := g.AddNode("3")
+	node4 := g.AddNode("4")
+
+	g.AddEdge(node1, node2, 1)
+	g.AddEdge(node2, node3, 2)
+	g.AddEdge(node1, node3, 3)
+	g.AddEdge(node3, node4, 4)
+
+	path := g.Dijkstra("1", "4")
+
+	expectedPath := []string{"1", "2", "3", "4"}
+
+	if !reflect.DeepEqual(path, expectedPath) {
+		t.Errorf("Expected path to be %v, got %v", expectedPath, path)
+	}
+}

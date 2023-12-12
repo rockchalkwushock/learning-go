@@ -1,6 +1,7 @@
 package main
 
 import (
+	"container/heap"
 	"math"
 )
 
@@ -589,5 +590,150 @@ func (h *MaxHeap) heapifyDown() {
 		}
 
 		index = largerChildIndex
+	}
+}
+
+// Dikjstra's Algorithm
+type Graph struct {
+	Nodes []*GraphNode
+}
+
+type GraphNode struct {
+	Value    string
+	Children []*GraphNode
+	Weights  map[*GraphNode]int
+	Index    int
+}
+
+func NewGraph() *Graph {
+	return &Graph{
+		Nodes: make([]*GraphNode, 0),
+	}
+}
+
+func NewGraphNode(value string) *GraphNode {
+	return &GraphNode{
+		Value:    value,
+		Children: make([]*GraphNode, 0),
+		Weights:  make(map[*GraphNode]int),
+	}
+}
+
+func (g *Graph) AddNode(value string) *GraphNode {
+	node := NewGraphNode(value)
+	g.Nodes = append(g.Nodes, node)
+	return node
+}
+
+func (g *Graph) AddEdge(node1, node2 *GraphNode, weight int) {
+	node1.Children = append(node1.Children, node2)
+	node1.Weights[node2] = weight
+}
+
+func (g *Graph) GetNodeByValue(value string) *GraphNode {
+	for _, node := range g.Nodes {
+		if node.Value == value {
+			return node
+		}
+	}
+	return nil
+}
+
+func (g *Graph) GetNodeIndexByValue(value string) int {
+	for i, node := range g.Nodes {
+		if node.Value == value {
+			return i
+		}
+	}
+	return -1
+}
+
+func (g *Graph) Dijkstra(start, end string) []string {
+	dist := make(map[*GraphNode]int)
+	prev := make(map[*GraphNode]*GraphNode)
+	nodes := make(PriorityQueue, len(g.Nodes))
+
+	for i, node := range g.Nodes {
+		if node.Value == start {
+			dist[node] = 0
+			nodes[i] = &Item{node, 0, i}
+		} else {
+			dist[node] = math.MaxInt32
+			nodes[i] = &Item{node, math.MaxInt32, i}
+		}
+		node.Index = i
+	}
+
+	heap.Init(&nodes)
+
+	for len(nodes) != 0 {
+		u := heap.Pop(&nodes).(*Item).value
+		for _, v := range u.Children {
+			alt := dist[u] + u.Weights[v]
+			if alt < dist[v] {
+				dist[v] = alt
+				prev[v] = u
+				nodes.update(v, alt)
+			}
+		}
+	}
+
+	var path []string
+	if _, ok := dist[g.Nodes[g.GetNodeIndexByValue(end)]]; ok {
+		for node := g.Nodes[g.GetNodeIndexByValue(end)]; node != nil; node = prev[node] {
+			path = append([]string{node.Value}, path...)
+		}
+	}
+	return path
+}
+
+type Item struct {
+	value    *GraphNode // The value of the item; arbitrary.
+	priority int        // The priority of the item in the queue.
+	// The index is needed by update and is maintained by the heap.Interface methods.
+	index int // The index of the item in the heap.
+}
+
+// A PriorityQueue implements heap.Interface and holds Items.
+type PriorityQueue []*Item
+
+func (pq PriorityQueue) Len() int { return len(pq) }
+
+func (pq PriorityQueue) Less(i, j int) bool {
+	// We want Pop to give us the highest, not lowest, priority so we use greater than here.
+	return pq[i].priority < pq[j].priority
+}
+
+func (pq PriorityQueue) Swap(i, j int) {
+	pq[i], pq[j] = pq[j], pq[i]
+	pq[i].index = i
+	pq[j].index = j
+}
+
+func (pq *PriorityQueue) Push(x interface{}) {
+	n := len(*pq)
+	item := x.(*Item)
+	item.index = n
+	*pq = append(*pq, item)
+}
+
+func (pq *PriorityQueue) Pop() interface{} {
+	old := *pq
+	n := len(old)
+	item := old[n-1]
+	old[n-1] = nil  // avoid memory leak
+	item.index = -1 // for safety
+	*pq = old[0 : n-1]
+	return item
+}
+
+// update modifies the priority and value of an Item in the queue.
+func (pq *PriorityQueue) update(node *GraphNode, priority int) {
+	for _, item := range *pq {
+		if item.value == node {
+			item.priority = priority
+			heap.Fix(pq, item.index)
+			break
+		}
 	}
 }
